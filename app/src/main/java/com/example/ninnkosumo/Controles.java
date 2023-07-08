@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import java.util.UUID;
 public class Controles extends MainActivity {
     private SensorManager sensorManager;
     private Sensor accelerometerSensor;
-    private TextView accelerometerValuesTextView;
+    private TextView accelerometerValuesTextView,posicion;
     private static final String TAG = "BlueTest5-Controlling";
     private int mMaxChars = 50000;//Default//change this to string..........
     private UUID mDeviceUUID;
@@ -46,17 +47,18 @@ public class Controles extends MainActivity {
     private Button mBtnDisconnect;
     private BluetoothDevice mDevice;
 
-    final static String on = "A", off = "R", izq="I", der="D", stp="S";//off
+    final static String on = "A", off = "R", izq="I1", der="D1", stp="S";//off
 
-
+ImageView imageView;
     private ProgressDialog progressDialog;
     Button btnOn, btnOff, btnIzq, btnDer, btnStop;
-
+    private TextView arriba,abajo,derecha,izquierda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controles);
+        //imageView = findViewById(R.id.imageView);
 
         ActivityHelper.initialize(this);
         // mBtnDisconnect = (Button) findViewById(R.id.btnDisconnect);
@@ -72,6 +74,10 @@ public class Controles extends MainActivity {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         accelerometerValuesTextView = findViewById(R.id.accelerometerValuesTextView);
+        arriba = findViewById(R.id.textViewTop);
+        abajo = findViewById(R.id.textViewLeft);
+        derecha = findViewById(R.id.textViewRight);
+        izquierda = findViewById(R.id.textViewBottom);
     }
 
     private class ReadInput implements Runnable {
@@ -258,39 +264,52 @@ public class Controles extends MainActivity {
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
-            if (x <= 0 && y>=0) {
-                try {
-                    mBTSocket.getOutputStream().write(stp.getBytes());
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                getWindow().getDecorView().setBackgroundColor(Color.BLUE);
-
-            }
-            else if(y>-1&& y < 5)
-            {
+            if (y<-5) {
                 try {
                     mBTSocket.getOutputStream().write(on.getBytes());
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
+
                 }
-                getWindow().getDecorView().setBackgroundColor(Color.RED);
+
+               arriba.setBackgroundResource(R.color.blue);
+                abajo.setBackgroundResource(R.color.black);
+                izquierda.setBackgroundResource(R.color.black);
+                derecha.setBackgroundResource(R.color.black);
 
             }
-            else if(x > 0&& x < 10)
+            else if(y>5)
+            {
+                try {
+                    mBTSocket.getOutputStream().write(off.getBytes());
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                abajo.setBackgroundResource(R.color.white);
+                arriba.setBackgroundResource(R.color.black);
+                izquierda.setBackgroundResource(R.color.black);
+                derecha.setBackgroundResource(R.color.black);
+
+
+            }
+            else if(x > 5)
             {
                 try {
                     mBTSocket.getOutputStream().write(izq.getBytes());
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                }
-                getWindow().getDecorView().setBackgroundColor(Color.GREEN);
 
+                }
+                izquierda.setBackgroundResource(R.color.green);
+                abajo.setBackgroundResource(R.color.black);
+                arriba.setBackgroundResource(R.color.black);
+                derecha.setBackgroundResource(R.color.black);
             }
-            else if(y > -4&& y < 0)
+            else if(x < -5)
             {
                 try {
                     mBTSocket.getOutputStream().write(der.getBytes());
@@ -298,9 +317,19 @@ public class Controles extends MainActivity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
 
+                derecha.setBackgroundResource(R.color.red);
+                abajo.setBackgroundResource(R.color.black);
+                arriba.setBackgroundResource(R.color.black);
+                izquierda.setBackgroundResource(R.color.black);
             }
+                /*posicion.setText("Atras");
+               abajo.setBackgroundResource(R.color.white);
+                arriba.setBackgroundResource(R.color.black);
+                izquierda.setBackgroundResource(R.color.black);
+                derecha.setBackgroundResource(R.color.black);*/
+
+
             String accelerometerValues = "Acelerómetro:\n"
                     + "X: " + x + "\n"
                     + "Y: " + y + "\n"

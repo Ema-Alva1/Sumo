@@ -5,17 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Controles">
-
-
     <TextView
         android:id="@+id/accelerometerValuesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Acelerómetro: "
-        android:textSize="18sp"
+        android:textSize="1sp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
        />
+
+    <TextView
+        android:id="@+id/textViewTop"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/accelerometerValuesTextView"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/background_rounded"
+         />
+
+
+    <TextView
+        android:id="@+id/textViewBottom"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
+        android:layout_below="@+id/textViewLeft"
+        android:background="@drawable/background_rounded"
+       />
+
+    <TextView
+        android:id="@+id/textViewLeft"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/background_rounded"
+        />
+
+    <TextView
+        android:id="@+id/textViewRight"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_margin="50dp"
+        android:background="@drawable/background_rounded"
+        />
 
 
 </RelativeLayout>
